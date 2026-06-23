@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Mapa Financeiro 5G — O aplicativo que ajuda você a controlar ganhos, gastos e contas sem complicação, sem planilhas, sem estresse." />
+  <title>Mapa Financeiro 5G — Organize sua vida financeira de forma simples 💰</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde:   #1a7a4a;
+      --verde-cl:#22a360;
+      --ouro:    #c9a227;
+      --ouro-cl: #f0c93a;
+      --escuro:  #0d1f14;
+      --cinza:   #1e2d22;
+      --texto:   #e8f0ea;
+      --texto-s: #a8c0ae;
+      --branco:  #ffffff;
+      --card-bg: #132219;
+      --radius:  12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--escuro);
+      color: var(--texto);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,31,20,.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,162,39,.2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .75rem 2rem; gap: 1rem;
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: var(--ouro); text-decoration: none; white-space: nowrap; }
+    .nav-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .nav-links a { color: var(--texto-s); text-decoration: none; font-size: .85rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--ouro-cl); }
+    .nav-back { color: var(--texto-s); text-decoration: none; font-size: .85rem; display: flex; align-items: center; gap: .4rem; }
+    .nav-back:hover { color: var(--ouro-cl); }
+    .nav-cta { background: var(--verde); color: var(--branco); padding: .5rem 1.2rem; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: .85rem; white-space: nowrap; transition: background .2s; }
+    .nav-cta:hover { background: var(--verde-cl); }
+
+    /* HERO */
+    .hero {
+      min-height: 88vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(201,162,39,.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--ouro); background: rgba(201,162,39,.12);
+      border: 1px solid rgba(201,162,39,.3);
+      padding: .3rem .8rem; border-radius: 4px; margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.15;
+      color: var(--branco); margin-bottom: 1.25rem; max-width: 760px;
+    }
+    .hero h1 span { color: var(--ouro-cl); }
+    .hero-sub { font-size: 1.1rem; color: var(--texto-s); max-width: 560px; margin: 0 auto 2rem; }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem; }
+
+    .btn-primary { background: var(--ouro); color: var(--escuro); font-weight: 700; font-size: .95rem; padding: .8rem 1.8rem; border-radius: 8px; text-decoration: none; transition: background .2s, transform .15s; display: inline-block; }
+    .btn-primary:hover { background: var(--ouro-cl); transform: translateY(-2px); }
+    .btn-secondary { background: var(--verde); color: var(--branco); font-weight: 700; font-size: .95rem; padding: .8rem 1.8rem; border-radius: 8px; text-decoration: none; transition: background .2s, transform .15s; display: inline-block; }
+    .btn-secondary:hover { background: var(--verde-cl); transform: translateY(-2px); }
+    .btn-outline { border: 1px solid rgba(201,162,39,.4); color: var(--ouro-cl); font-weight: 600; font-size: .95rem; padding: .75rem 1.6rem; border-radius: 8px; text-decoration: none; transition: background .2s; display: inline-block; }
+    .btn-outline:hover { background: rgba(201,162,39,.1); }
+
+    .hero-img { width: 100%; max-width: 680px; border-radius: 16px; border: 1px solid rgba(201,162,39,.2); margin-top: 1rem; }
+
+    /* SECTIONS */
+    section { padding: 5rem 4rem; }
+    .section-label { font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--ouro); margin-bottom: .75rem; }
+    h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700; color: var(--branco); line-height: 1.2; margin-bottom: 1rem; }
+    .section-sub { color: var(--texto-s); max-width: 640px; margin-bottom: 3rem; font-size: 1.05rem; }
+
+    /* PIPO */
+    .pipo { background: var(--cinza); }
+    .pipo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .pipo-badge { display: inline-flex; align-items: center; gap: .5rem; background: rgba(201,162,39,.1); border: 1px solid rgba(201,162,39,.2); border-radius: 20px; padding: .4rem .9rem; font-size: .85rem; color: var(--ouro-cl); margin-bottom: 1.25rem; }
+    .pipo-texto p { color: var(--texto-s); margin-bottom: 1rem; }
+    .pipo-img { width: 100%; border-radius: 16px; border: 1px solid rgba(255,255,255,.07); }
+
+    /* DISPOSITIVOS */
+    .dispositivos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2.5rem; }
+    .disp-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,.07); border-radius: var(--radius); padding: 1.75rem; text-align: center; }
+    .disp-card .ico { font-size: 2.5rem; margin-bottom: .75rem; display: block; }
+    .disp-card h3 { color: var(--branco); font-size: 1rem; margin-bottom: .4rem; }
+    .disp-card p { color: var(--texto-s); font-size: .85rem; margin-bottom: 1rem; }
+
+    /* FUNCIONALIDADES */
+    .func { background: var(--cinza); }
+    .func-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 2.5rem; }
+    .func-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,.07); border-radius: var(--radius); padding: 1.5rem; }
+    .func-card .ico { font-size: 1.75rem; margin-bottom: .75rem; display: block; }
+    .func-card h3 { color: var(--branco); font-size: .95rem; margin-bottom: .4rem; }
+    .func-card p { color: var(--texto-s); font-size: .83rem; }
+
+    /* INVESTIMENTOS */
+    .invest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .invest-card { background: var(--card-bg); border: 1px solid rgba(201,162,39,.12); border-radius: var(--radius); padding: 1.25rem; }
+    .invest-card .tag { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ouro); margin-bottom: .4rem; display: block; }
+    .invest-card p { color: var(--texto-s); font-size: .85rem; }
+
+    /* FINANCIAMENTOS */
+    .fin { background: var(--cinza); }
+    .fin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .fin-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,.07); border-radius: var(--radius); padding: 1.25rem; }
+    .fin-card h4 { color: var(--branco); font-size: .9rem; margin-bottom: .35rem; }
+    .fin-card p { color: var(--texto-s); font-size: .82rem; }
+    .fin-destaque { background: rgba(201,162,39,.08); border: 1px solid rgba(201,162,39,.2); border-radius: 10px; padding: 1.25rem; margin-top: 1.5rem; color: var(--texto-s); font-size: .9rem; }
+
+    /* SEGURANÇA */
+    .seg-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .seg-list { list-style: none; margin: 1.5rem 0 2rem; }
+    .seg-list li { padding: .5rem 0; color: var(--texto-s); display: flex; align-items: flex-start; gap: .6rem; border-bottom: 1px solid rgba(255,255,255,.05); }
+    .seg-list li:last-child { border: none; }
+    .seg-list li::before { content: '🔒'; flex-shrink: 0; }
+    .seg-img { width: 100%; border-radius: 16px; border: 1px solid rgba(255,255,255,.07); }
+
+    /* GUIA */
+    .guia { background: var(--cinza); }
+    .guia-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin: 2rem 0; }
+    .guia-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,.07); border-radius: var(--radius); padding: 1.25rem; text-align: center; }
+    .guia-card .ico { font-size: 1.5rem; display: block; margin-bottom: .5rem; }
+    .guia-card p { color: var(--texto-s); font-size: .83rem; }
+
+    /* DEPOIMENTO */
+    .depoimento { text-align: center; }
+    .dep-box { max-width: 720px; margin: 0 auto; }
+    .dep-box blockquote { font-style: italic; color: var(--texto-s); font-size: 1rem; line-height: 1.75; border-left: 3px solid var(--ouro); padding-left: 1.5rem; text-align: left; margin: 2rem 0; }
+    .dep-box cite { display: block; margin-top: .75rem; color: var(--ouro-cl); font-size: .9rem; font-style: normal; font-weight: 600; }
+
+    /* CTA FINAL */
+    .cta-final { background: linear-gradient(135deg, rgba(26,122,74,.2) 0%, rgba(201,162,39,.1) 100%); border-top: 1px solid rgba(201,162,39,.15); text-align: center; }
+    .cta-final h2 { max-width: 600px; margin: 0 auto 1rem; }
+    .cta-final p { color: var(--texto-s); max-width: 500px; margin: 0 auto 2rem; }
+
+    /* CONTATO */
+    .contato { background: var(--cinza); text-align: center; }
+    .contato-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .contato-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .65rem 1.25rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: .9rem; border: 1px solid rgba(255,255,255,.15); color: var(--texto); background: var(--card-bg); transition: border-color .2s; }
+    .contato-btn:hover { border-color: var(--ouro); }
+
+    /* FOOTER */
+    footer { background: var(--escuro); border-top: 1px solid rgba(255,255,255,.07); padding: 2.5rem 4rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer p { color: var(--texto-s); font-size: .82rem; }
+    footer a { color: var(--ouro); text-decoration: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      section { padding: 3.5rem 1.5rem; }
+      .hero { padding: 3rem 1.5rem; min-height: auto; }
+      .pipo-inner { grid-template-columns: 1fr; }
+      .seg-inner { grid-template-columns: 1fr; }
+      .dispositivos-grid { grid-template-columns: 1fr; }
+      nav { padding: .75rem 1.25rem; }
+      .nav-links { display: none; }
+      footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; transform: none !important; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/index.html" class="nav-logo">🐷 Mapa Financeiro 5G</a>
+  <div class="nav-links">
+    <a href="#pipo">Porquinho Pipo</a>
+    <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#investimentos">Investimentos</a>
+    <a href="#seguranca">Segurança</a>
+    <a href="#guia">Guia</a>
+  </div>
+  <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="nav-cta">📲 Baixar App</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <span class="hero-eyebrow">Aplicativo Mapa Financeiro 5G</span>
+  <h1>Organize sua vida financeira<br><span>de forma simples 💰</span></h1>
+  <p class="hero-sub">O aplicativo que ajuda você a controlar ganhos, gastos e contas — sem complicação, sem planilhas, sem estresse.</p>
+  <div class="hero-btns">
+    <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-primary">📲 BAIXE AGORA — Google Play</a>
+    <a href="https://mapafinanceiro5g.com.br" target="_blank" class="btn-outline">🌐 Acessar pelo navegador</a>
+  </div>
+  <img
+    src="https://cdn.gamma.app/0xr3x9ilqxjzyl0/edb4bdb226154ccf97ecf9a39d913869/original/imagem-2-assistente-voz-registra.png"
+    alt="Tela do app Mapa Financeiro 5G com assistente de voz Porquinho Pipo"
+    class="hero-img"
+  />
+</section>
+
+<!-- PIPO -->
+<section class="pipo" id="pipo">
+  <div class="pipo-inner">
+    <div class="pipo-texto">
+      <span class="pipo-badge">🐷 Seu assistente financeiro pessoal</span>
+      <h2>Conheça o Porquinho Pipo</h2>
+      <p>Sem julgamentos, sem planilhas complicadas, sem estresse. O Porquinho está aqui para transformar o caos financeiro em clareza — com leveza e do seu jeito.</p>
+      <p>Com o Porquinho Pipo, registrar um gasto é tão fácil quanto mandar uma mensagem de voz para um amigo. Basta falar com ele e deixar a mágica acontecer. 🐷</p>
+      <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-secondary" style="margin-top:1rem;">🐷 TESTAR O APP</a>
+    </div>
+    <div>
+      <img
+        src="https://cdn.gamma.app/0xr3x9ilqxjzyl0/270c2eb260f041949d22ac11f85b4420/original/ChatGPT-Image-26-de-mai.-de-2026-11_25_04.png"
+        alt="Interface limpa e intuitiva do Mapa Financeiro 5G"
+        class="pipo-img"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- DEMONSTRAÇÃO / INTERFACE -->
+<section id="interface">
+  <p class="section-label">📱 Demonstração</p>
+  <h2>Interface limpa e intuitiva</h2>
+  <p class="section-sub">Desenvolvida para que qualquer pessoa — independente de experiência com finanças — consiga usar com confiança desde o primeiro acesso.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;">
+    <div style="background:var(--card-bg);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:1.25rem;">
+      <span style="font-size:1.5rem;display:block;margin-bottom:.5rem;">📊</span>
+      <h3 style="color:var(--branco);font-size:.95rem;margin-bottom:.4rem;">Painel visual</h3>
+      <p style="color:var(--texto-s);font-size:.83rem;">Gastos e ganhos do mês em uma tela só.</p>
+    </div>
+    <div style="background:var(--card-bg);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:1.25rem;">
+      <span style="font-size:1.5rem;display:block;margin-bottom:.5rem;">🏷️</span>
+      <h3 style="color:var(--branco);font-size:.95rem;margin-bottom:.4rem;">Categorias automáticas</h3>
+      <p style="color:var(--texto-s);font-size:.83rem;">Organize seus lançamentos sem esforço.</p>
+    </div>
+    <div style="background:var(--card-bg);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:1.25rem;">
+      <span style="font-size:1.5rem;display:block;margin-bottom:.5rem;">📅</span>
+      <h3 style="color:var(--branco);font-size:.95rem;margin-bottom:.4rem;">Histórico completo</h3>
+      <p style="color:var(--texto-s);font-size:.83rem;">Acesse qualquer lançamento a qualquer momento.</p>
+    </div>
+    <div style="background:var(--card-bg);border:1px solid rgba(255,255,255,.07);border-radius:var(--radius);padding:1.25rem;">
+      <span style="font-size:1.5rem;display:block;margin-bottom:.5rem;">🌙</span>
+      <h3 style="color:var(--branco);font-size:.95rem;margin-bottom:.4rem;">Modo escuro elegante</h3>
+      <p style="color:var(--texto-s);font-size:.83rem;">Visual agradável para usar a qualquer hora.</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2rem;">
+    <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-secondary">📥 DISPONÍVEL NO GOOGLE PLAY</a>
+  </div>
+</section>
+
+<!-- DISPOSITIVOS -->
+<section style="background:var(--cinza)" id="dispositivos">
+  <p class="section-label">🌐 Acesse de Qualquer Lugar</p>
+  <h2>Use no celular, tablet ou computador</h2>
+  <p class="section-sub">O Mapa Financeiro 5G está disponível em todos os seus dispositivos. Escolha a forma mais fácil para você!</p>
+  <div class="dispositivos-grid">
+    <div class="disp-card">
+      <span class="ico">💻</span>
+      <h3>Computador</h3>
+      <p>Acesse pelo navegador em qualquer computador, sem instalar nada.</p>
+      <a href="https://mapafinanceiro5g.com.br" target="_blank" class="btn-outline" style="font-size:.85rem;padding:.55rem 1rem;">🌐 ACESSAR AGORA</a>
+    </div>
+    <div class="disp-card">
+      <span class="ico">🤖</span>
+      <h3>Android</h3>
+      <p>Baixe gratuitamente na Google Play Store e tenha tudo no seu celular.</p>
+      <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-secondary" style="font-size:.85rem;padding:.55rem 1rem;">📲 BAIXAR NA PLAY STORE</a>
+    </div>
+    <div class="disp-card">
+      <span class="ico">🍎</span>
+      <h3>iPhone</h3>
+      <p>Acesse pelo Safari e adicione à tela de início para usar como app!</p>
+      <a href="https://mapafinanceiro5g.com.br" target="_blank" class="btn-outline" style="font-size:.85rem;padding:.55rem 1rem;">📱 ACESSAR PELO SAFARI</a>
+    </div>
+  </div>
+</section>
+
+<!-- FUNCIONALIDADES -->
+<section class="func" id="funcionalidades">
+  <p class="section-label">✨ Por que o Mapa Financeiro 5G?</p>
+  <h2>Tudo que você precisa para cuidar do seu dinheiro</h2>
+  <p class="section-sub">Simples, inteligente e feito para a sua rotina. Sem burocracia, sem complicação.</p>
+  <div class="func-grid">
+    <div class="func-card">
+      <span class="ico">🐷</span>
+      <h3>Registro por Voz</h3>
+      <p>Fale com o Porquinho Pipo e registre ganhos e gastos rapidamente, sem digitar nada.</p>
+    </div>
+    <div class="func-card">
+      <span class="ico">📲</span>
+      <h3>Alertas no WhatsApp</h3>
+      <p>Receba avisos sobre contas e vencimentos diretamente no seu WhatsApp.</p>
+    </div>
+    <div class="func-card">
+      <span class="ico">🎯</span>
+      <h3>Metas Financeiras</h3>
+      <p>Crie desafios e objetivos para economizar dinheiro e alcançar seus sonhos.</p>
+    </div>
+    <div class="func-card">
+      <span class="ico">💰</span>
+      <h3>Controle Simples</h3>
+      <p>Sem planilhas complicadas. Fácil para qualquer pessoa usar no dia a dia.</p>
+    </div>
+    <div class="func-card">
+      <span class="ico">🔒</span>
+      <h3>Privacidade Total</h3>
+      <p>Sem conexão bancária. Seus dados ficam no seu controle, mais seguros.</p>
+    </div>
+    <div class="func-card">
+      <span class="ico">📥</span>
+      <h3>Exportar Orçamento</h3>
+      <p>Baixe seu orçamento mensal em Excel ou PDF para arquivar, compartilhar ou editar.</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;">
+    <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-primary">📲 BAIXE AGORA</a>
+  </div>
+</section>
+
+<!-- INVESTIMENTOS -->
+<section id="investimentos">
+  <p class="section-label">📈 Investimentos</p>
+  <h2>Gerencie seus investimentos em um só lugar</h2>
+  <p class="section-sub">Acompanhe toda a sua carteira de investimentos de forma simples e organizada, sem precisar abrir vários aplicativos.</p>
+  <div class="invest-grid">
+    <div class="invest-card">
+      <span class="tag">🏦 Renda Fixa</span>
+      <p>CDB, Tesouro Direto, LCI, LCA e muito mais.</p>
+    </div>
+    <div class="invest-card">
+      <span class="tag">📊 Ações</span>
+      <p>Acompanhe suas ações na bolsa em tempo real.</p>
+    </div>
+    <div class="invest-card">
+      <span class="tag">🏢 Fundos Imobiliários</span>
+      <p>Monitore seus FIIs e rendimentos mensais.</p>
+    </div>
+    <div class="invest-card">
+      <span class="tag">₿ Criptomoedas</span>
+      <p>Bitcoin, Ethereum e outras criptos no seu controle.</p>
+    </div>
+    <div class="invest-card">
+      <span class="tag">✨ E muito mais</span>
+      <p>Todos os seus ativos reunidos em um único painel.</p>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2rem;">
+    <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-secondary">📲 COMEÇAR AGORA</a>
+  </div>
+</section>
+
+<!-- FINANCIAMENTOS -->
+<section class="fin" id="financiamentos">
+  <p class="section-label">💳 Financiamentos & Empréstimos</p>
+  <h2>Acompanhe seus financiamentos e empréstimos</h2>
+  <p class="section-sub">Tenha controle total sobre o pagamento das suas dívidas e descubra quanto você pode economizar quitando com antecedência.</p>
+  <div class="fin-grid">
+    <div class="fin-card">
+      <h4>📅 Evolução do Pagamento</h4>
+      <p>Acompanhe parcela a parcela e veja o saldo devedor diminuir.</p>
+    </div>
+    <div class="fin-card">
+      <h4>🏠 Financiamentos</h4>
+      <p>Imóveis, veículos e outros financiamentos organizados em um só lugar.</p>
+    </div>
+    <div class="fin-card">
+      <h4>🧮 Simulação de Quitação</h4>
+      <p>Simule quanto você economiza quitando sua dívida com antecedência.</p>
+    </div>
+  </div>
+  <div class="fin-destaque">
+    💡 <strong style="color:var(--branco)">Sabia que</strong> quitar um financiamento com antecedência pode te economizar <strong style="color:var(--ouro-cl)">milhares de reais em juros</strong>? Simule agora no app!
+  </div>
+  <div style="text-align:center;margin-top:2rem;">
+    <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-primary">🧮 SIMULAR MINHA ECONOMIA</a>
+  </div>
+</section>
+
+<!-- SEGURANÇA -->
+<section id="seguranca">
+  <div class="seg-inner">
+    <div>
+      <p class="section-label">🔒 Segurança em Primeiro Lugar</p>
+      <h2>Sem acesso bancário.<br>100% no seu controle.</h2>
+      <p style="color:var(--texto-s);margin-bottom:1rem;">O Mapa Financeiro 5G não acessa suas contas bancárias, não lê seus extratos e não pede senha de banco. Você insere os dados manualmente, mantendo total privacidade.</p>
+      <ul class="seg-list">
+        <li>Sem integração bancária obrigatória</li>
+        <li>Dados armazenados de forma segura</li>
+        <li>Controle total nas suas mãos</li>
+        <li>Transparência em cada funcionalidade</li>
+      </ul>
+      <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-secondary">📲 COMEÇAR COM SEGURANÇA</a>
+    </div>
+    <div>
+      <img
+        src="https://cdn.gamma.app/0xr3x9ilqxjzyl0/generated-images/FYFB-AZguKRSEDq2YI-l8.png"
+        alt="Segurança e privacidade do Mapa Financeiro 5G"
+        class="seg-img"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- GUIA -->
+<section class="guia" id="guia">
+  <p class="section-label">📖 Guia Prático</p>
+  <h2>Aprenda a usar o app do zero ao avançado</h2>
+  <p class="section-sub">Descubra todas as funcionalidades do Mapa Financeiro 5G com nosso guia completo — passo a passo, simples e direto ao ponto.</p>
+  <div class="guia-grid">
+    <div class="guia-card"><span class="ico">📊</span><p>Painel — visão geral do mês financeiro</p></div>
+    <div class="guia-card"><span class="ico">🐷</span><p>Porquinho — registro por voz sem digitar</p></div>
+    <div class="guia-card"><span class="ico">📈</span><p>Investimentos — carteira completa</p></div>
+    <div class="guia-card"><span class="ico">💳</span><p>Dívidas — simulação de quitação antecipada</p></div>
+  </div>
+  <p style="color:var(--texto-s);font-size:.9rem;margin-bottom:1.75rem;">✅ O guia cobre mais de 15 funcionalidades: Despesas, Entradas, Metas, Orçamento, Gráficos, Desafios, Cartões, Planos e muito mais!</p>
+  <a href="https://docs.google.com/document/d/1fu0VrDHr4it728EZeTXQK2H60q7yMFx_Chx3NNn0Fco/edit?usp=sharing" target="_blank" class="btn-primary">📖 ACESSAR O GUIA COMPLETO</a>
+</section>
+
+<!-- DEPOIMENTO TATI -->
+<section class="depoimento" id="depoimento">
+  <div class="dep-box">
+    <p class="section-label">Palavra da Criadora</p>
+    <h2>Por que o app faz diferença?</h2>
+    <blockquote>
+      "Muitas vezes estamos com tantas dívidas que não queremos anotar todas, pois encarar o tamanho das nossas despesas mensais e da nossa dívida total parece algo impossível de acabar. O Método Finanças 5G nos ajuda a mudar nossa relação com o dinheiro. A partir dos 5 princípios: GANHAR, GRATIDÃO, GENEROSIDADE, GASTAR E GUARDAR, mudamos nossa mentalidade de devedores para investidores e começamos a agir em busca da nossa liberdade financeira — e isso faz toda a diferença. Nesse processo, um aplicativo que é uma ferramenta de gestão é essencial para nos fazer enxergar onde estamos e onde queremos chegar."
+      <cite>— Profª Tati Silva, criadora do Método Finanças 5G</cite>
+    </blockquote>
+    <a href="/index.html" style="color:var(--verde-cl);text-decoration:none;font-size:.9rem;">← Conheça o Método Finanças 5G completo</a>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <p class="section-label">Comece hoje</p>
+  <h2>Pare de ser devedor.<br>Comece a ser investidor. 💰</h2>
+  <p>Comece hoje a organizar sua vida financeira. Simples, rápido e gratuito. O Porquinho está te esperando.</p>
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+    <a href="https://play.google.com/store/apps/details?id=com.financas5g.app" target="_blank" class="btn-primary">📲 BAIXE AGORA — GOOGLE PLAY</a>
+    <a href="https://mapafinanceiro5g.com.br" target="_blank" class="btn-outline">🌐 Acessar pelo navegador</a>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato">
+  <p class="section-label">Dúvidas?</p>
+  <h2>Fale com a gente! 💬</h2>
+  <div class="contato-links">
+    <a href="https://wa.me/554195964572" target="_blank" class="contato-btn">💬 WhatsApp</a>
+    <a href="mailto:metodofinancas5g@gmail.com" class="contato-btn">✉️ E-mail</a>
+    <a href="https://www.instagram.com/financas5g" target="_blank" class="contato-btn">📸 Instagram</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--ouro);margin-bottom:.25rem;">🐷 Mapa Financeiro 5G</p>
+    <p>© 2026 Mapa Financeiro 5G · Todos os direitos reservados · Feito com 💜 para você organizar sua vida financeira</p>
+  </div>
+  <div style="text-align:right">
+    <p><a href="/index.html">← Voltar para Finanças 5G</a></p>
+    <p style="margin-top:.25rem;"><a href="https://mapafinanceiro5g.com.br">mapafinanceiro5g.com.br</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
